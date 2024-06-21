@@ -13,75 +13,92 @@ function getComputerChoice() {
 
 function playGame() {
     const buttons = document.querySelectorAll("button");
-    let msg = document.querySelector('#msg');
+    const results = document.querySelector("div");
+    const score = document.createElement("p");
+    const choices = document.createElement("p");
+    const finalResult = document.createElement("p");
+    const round = document.createElement("p");
+    round.id = "id";
+    results.appendChild(choices);
+    results.appendChild(round);
+    results.appendChild(score);
+    results.appendChild(finalResult);
 
     buttons.forEach(button => {
         button.addEventListener('click', (event) => {
+
             const humanChoice = button.id;
             const computerChoice = getComputerChoice();
 
             if (humanScore === 5 || computerScore === 5) {
-                if (humanScore > computerScore) {
-                    console.log("Human wins!");
-                } else {
-                    console.log("Computer wins!");
-                }
+                return;
             } else {
                 playRound(humanChoice, computerChoice);
-                console.log(`Human: ${humanScore}, Computer: ${computerScore}`);
-            }  
+                choices.textContent = `Human: ${humanChoice}, Computer: ${computerChoice}`;
+                
+                score.textContent = `Human: ${humanScore}, Computer: ${computerScore}`;
+                
+            }
+
+            if (humanScore === 5) {
+                finalResult.textContent = "Human wins!";
+                
+            } else if (computerScore === 5) {
+                finalResult.textContent = "Computer wins!";
+            }
         });
     });
 }
 
 function playRound(humanChoice, computerChoice) {
+    const round = document.getElementById("id");
     switch (humanChoice) {
         case 'rock':
             switch(computerChoice) {
                 case 'scissors':
-                    console.log("You win! Rock beats Scissors.");
+                    round.textContent = "You win! Rock beats Scissors.";
                     humanScore++;
                 break;
                 case 'paper':
-                    console.log("You lose! Paper beats Rock.");
+                    round.textContent = "You lose! Paper beats Rock.";
                     computerScore++;
                 break;
                 default:
-                    console.log("It's a tie!");
+                    round.textContent = "It's a tie!";
             }
         break;
 
         case 'paper':
             switch(computerChoice) {
                 case 'rock':
-                    console.log("You win! Paper beats Rock.");
+                    round.textContent = "You win! Paper beats Rock.";
                     humanScore++;
                 break;
                 case 'scissors':
-                    console.log("You lose! Scissors beats Paper.");
+                    round.textContent = "You lose! Scissors beats Paper.";
                     computerScore++;
                 break;
                 default:
-                    console.log("It's a tie!");
+                    round.textContent = "It's a tie!";
             }
         break;
 
         case 'scissors':
             switch(computerChoice) {
                 case 'paper':
-                    console.log("You win! Scissors beats Paper.");
+                    round.textContent = "You win! Scissors beats Paper.";
                     humanScore++;
                 break;
                 case 'rock':
-                    console.log("You lose! Rock beats Scissors.");
+                    round.textContent = "You lose! Rock beats Scissors.";
                     computerScore++;
                 break;
                 default:
-                    console.log("It's a tie!");
+                    round.textContent = "It's a tie!";
             }
         break;
         default:
-            console.log("IDK what happened");
+            
     }
 }
 
